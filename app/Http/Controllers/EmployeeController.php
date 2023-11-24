@@ -7,8 +7,9 @@ namespace App\Http\Controllers;
 use App\Services\EmployeeInterface;
 use App\Services\EmployeeService;
 use Illuminate\Http\Request;
+use Ramsey\Collection\Collection;
 
-class Employee extends Controller
+class EmployeeController extends Controller
 {
     protected EmployeeService $service;
 
@@ -19,7 +20,7 @@ class Employee extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): Collection
     {
         return $this->service->getEmployee();
     }
@@ -35,10 +36,10 @@ class Employee extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): \Illuminate\Http\JsonResponse
     {
         $params = [
-            'id_departament' => $request->input('id_departament'),
+            'id_department' => $request->input('id_department'),
             'id_post' => $request->input('id_post'),
             'name' => $request->input('name'),
             'surname' => $request->input('surname'),
@@ -48,6 +49,11 @@ class Employee extends Controller
         ];
 
         $this->service->addNewEmployee($params);
+
+        return EmployeeResponseHelper::createResponse([
+            'status' => 200,
+            'message' => 'Employee created!'
+        ]);
     }
 
     /**
@@ -69,16 +75,26 @@ class Employee extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request, int $id): \Illuminate\Http\JsonResponse
     {
         $this->service->editEmployee($request, $id);
+
+        return EmployeeResponseHelper::createResponse([
+            'status' => 200,
+            'message' => 'Employee updated!'
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id): void
+    public function destroy(int $id): \Illuminate\Http\JsonResponse
     {
         $this->service->deleteEmployee($id);
+
+        return EmployeeResponseHelper::createResponse([
+            'status' => 200,
+            'message' => 'Employee deleted!'
+        ]);
     }
 }
