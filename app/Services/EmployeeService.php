@@ -18,7 +18,7 @@ class EmployeeService implements EmployeeInterface
     public function addNewEmployee(array $params): void
     {
         $employee = new Employee();
-        $employee->id_departament = $params['id_departament'];
+        $employee->id_department = $params['id_department'];
         $employee->id_post = $params['id_post'];
         $employee->name = $params['name'];
         $employee->surname = $params['surname'];
@@ -32,8 +32,8 @@ class EmployeeService implements EmployeeInterface
     {
         $employee = Employee::findOrFail($id);
 
-        if($request->id_departament) {
-            $employee->id_departament = $request->id_departament;
+        if($request->id_department) {
+            $employee->id_department = $request->id_department;
         }
         if($request->id_post) {
             $employee->id_post = $request->id_post;
