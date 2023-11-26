@@ -45,6 +45,7 @@ class EmployeeController extends Controller
             'surname' => $request->input('surname'),
             'email' => $request->input('email'),
             'phone_number' => $request->input('phone_number'),
+            'salary' => $request->input('salary'),
             'date' => $request->input('date'),
         ];
 
