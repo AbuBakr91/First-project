@@ -24,6 +24,7 @@ class EmployeeService implements EmployeeInterface
         $employee->surname = $params['surname'];
         $employee->email = $params['email'];
         $employee->phone_number = $params['phone_number'];
+        $employee->salary = $params['salary'];
         $employee->date = $params['date'];
         $employee->save();
     }
@@ -50,7 +51,9 @@ class EmployeeService implements EmployeeInterface
         if($request->phone_number) {
             $employee->phone_number = $request->phone_number;
         }
-
+        if($request->salary) {
+            $employee->salary = $request->salary;
+        }
         if($request->date) {
             $employee->date = $request->date;
         }
