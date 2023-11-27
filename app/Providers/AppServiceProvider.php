@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Services\EmployeeInterface;
 use App\Services\EmployeeService;
+use App\Services\DepartmentInterface;
+use App\Services\DepartmentService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -15,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(EmployeeInterface::class, EmployeeService::class);
 
+        $this->app->bind(DepartmentInterface::class, DepartmentService::class);
     }
 
     /**
