@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Services\EmployeeInterface;
+use App\Services\EmployeeResponseHelper;
 use App\Services\EmployeeService;
 use Illuminate\Http\Request;
 
@@ -39,8 +40,8 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         try {
-            $departmentId = $this->service->getNameId($request->input('id'));
-            $positionId = $this->service->getModelId($request->input('id'));
+            $departmentId = $this->service->getDepartmentId($request->input('id'));
+            $positionId = $this->service->getPositionId($request->input('id'));
 
         } catch (\Exception $e) {
             throw new \Exception('Not found employee' . $e->getMessage());
