@@ -1,5 +1,6 @@
 <?php
 
+<<<<<<< HEAD
 declare(strict_types=1);
 
 namespace App\Services;
@@ -10,6 +11,19 @@ use Illuminate\Http\Request;
 
 class EmployeeService implements EmployeeInterface
 {
+=======
+namespace App\Services;
+
+use App\Models\Department;
+use App\Models\Employee;
+use App\Models\Position;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Request;
+
+class EmployeeService implements EmployeeServiceInterface
+{
+
+>>>>>>> DEV-4.1
     public function getEmployee(): Collection
     {
         return Employee::all();
@@ -18,14 +32,13 @@ class EmployeeService implements EmployeeInterface
     public function addNewEmployee(array $params): void
     {
         $employee = new Employee();
-        $employee->id_department = $params['id_department'];
-        $employee->id_post = $params['id_post'];
-        $employee->name = $params['name'];
-        $employee->surname = $params['surname'];
+        $employee->first_name = $params['first_name'];
+        $employee->last_name = $params['last_name'];
         $employee->email = $params['email'];
         $employee->phone_number = $params['phone_number'];
-        $employee->salary = $params['salary'];
-        $employee->date = $params['date'];
+        $employee->hire_date = $params['hire_date'];
+        $employee->department_id = $params['department_id'];
+        $employee->position_id = $params['position_id'];
         $employee->save();
     }
 
@@ -33,29 +46,26 @@ class EmployeeService implements EmployeeInterface
     {
         $employee = Employee::findOrFail($id);
 
-        if($request->id_department) {
-            $employee->id_department = $request->id_department;
+        if ($request->first_name) {
+            $employee->first_name = $request->first_name;
         }
-        if($request->id_post) {
-            $employee->id_post = $request->id_post;
+        if ($request->last_name) {
+            $employee->last_name = $request->last_name;
         }
-        if($request->name) {
-            $employee->name = $request->name;
-        }
-        if($request->surname) {
-            $employee->surname = $request->surname;
-        }
-        if($request->email) {
+        if ($request->email) {
             $employee->email = $request->email;
         }
-        if($request->phone_number) {
+        if ($request->phone_number) {
             $employee->phone_number = $request->phone_number;
         }
-        if($request->salary) {
-            $employee->salary = $request->salary;
+        if ($request->hire_date) {
+            $employee->hire_date = $request->hire_date;
         }
-        if($request->date) {
-            $employee->date = $request->date;
+        if ($request->department_id) {
+            $employee->department_id = $request->department_id;
+        }
+        if ($request->position_id) {
+            $employee->position_id = $request->position_id;
         }
 
         $employee->update();
@@ -65,5 +75,15 @@ class EmployeeService implements EmployeeInterface
     {
         $employee = Employee::findOrFail($id);
         $employee->delete();
+    }
+
+    public function getDepartmentId(int $id): int
+    {
+        return  Department::where('id', $id)->first()->id;
+    }
+
+    public function getPositionId(int $id): int
+    {
+        return  Position::where('id', $id)->first()->id;
     }
 }

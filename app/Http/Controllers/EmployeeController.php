@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Services\EmployeeInterface;
+use App\Services\EmployeeResponseHelper;
 use App\Services\EmployeeService;
 use Illuminate\Http\Request;
-use Ramsey\Collection\Collection;
 
 class EmployeeController extends Controller
 {
@@ -17,15 +17,17 @@ class EmployeeController extends Controller
     {
         $this->service = $service;
     }
+
     /**
      * Display a listing of the resource.
      */
-    public function index(): Collection
+    public function index(): \Illuminate\Database\Eloquent\Collection
     {
         return $this->service->getEmployee();
     }
 
     /**
+<<<<<<< HEAD
      * Show the form for creating a new resource.
      */
     public function create()
@@ -35,48 +37,29 @@ class EmployeeController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @throws Exception
      */
     public function store(Request $request): \Illuminate\Http\JsonResponse
     {
-        $params = [
-            'id_department' => $request->input('id_department'),
-            'id_post' => $request->input('id_post'),
-            'name' => $request->input('name'),
-            'surname' => $request->input('surname'),
-            'email' => $request->input('email'),
-            'phone_number' => $request->input('phone_number'),
-            'salary' => $request->input('salary'),
-            'date' => $request->input('date'),
-        ];
+        $params = EmployeeHelper::prepareData($request);
 
-        $this->service->addNewEmployee($params);
+        try {
+            $this->service->addNewEmployee($params);
+
+        } catch (Exception $e) {
+            throw new Exception('Ошибка при добавлении нового сотрудника' . $e->getMessage());
+        }
 
         return EmployeeResponseHelper::createResponse([
             'status' => 200,
-            'message' => 'Employee created!'
+            'message' => 'Сотрудник добавлен!'
         ]);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, int $id): \Illuminate\Http\JsonResponse
+    public function update(Request $request, int $id)
     {
         $this->service->editEmployee($request, $id);
 
