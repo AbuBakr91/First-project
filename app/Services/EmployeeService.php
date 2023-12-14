@@ -5,11 +5,10 @@ namespace App\Services;
 use App\Models\Department;
 use App\Models\Employee;
 use App\Models\Position;
-use App\Services\EmployeeInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
-class EmployeeService implements EmployeeInterface
+class EmployeeService implements EmployeeServiceInterface
 {
 
     public function getEmployee(): Collection
@@ -65,12 +64,12 @@ class EmployeeService implements EmployeeInterface
         $employee->delete();
     }
 
-    public function getDepartmentId(string $id): int
+    public function getDepartmentId(int $id): int
     {
         return  Department::where('id', $id)->first()->id;
     }
 
-    public function getPositionId(string $id): int
+    public function getPositionId(int $id): int
     {
         return  Position::where('id', $id)->first()->id;
     }
