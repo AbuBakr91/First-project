@@ -21,64 +21,30 @@ class EmployeeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): \Illuminate\Database\Eloquent\Collection
     {
         return $this->service->getEmployee();
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
+     * @throws Exception
      */
-    public function store(Request $request)
+    public function store(Request $request): \Illuminate\Http\JsonResponse
     {
+        $params = EmployeeHelper::prepareData($request);
+
         try {
-            $departmentId = $this->service->getDepartmentId($request->input('id'));
-            $positionId = $this->service->getPositionId($request->input('id'));
+            $this->service->addNewEmployee($params);
 
-        } catch (\Exception $e) {
-            throw new \Exception('Not found employee' . $e->getMessage());
+        } catch (Exception $e) {
+            throw new Exception('Ошибка при добавлении нового сотрудника' . $e->getMessage());
         }
-
-        $params = [
-            'first_name' => $request->input('first_name'),
-            'last_name' => $request->input('last_name'),
-            'email' => $request->input('email'),
-            'phone_number' => $request->input('phone_number'),
-            'hire_date' => $request->input('hire_date'),
-            'department_id' => $departmentId,
-            'position_id' => $positionId,
-        ];
-
-        $this->service->addNewEmployee($params);
 
         return EmployeeResponseHelper::createResponse([
             'status' => 200,
-            'message' => 'Employee created!'
+            'message' => 'Сотрудник добавлен!'
         ]);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(int $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(int $id)
-    {
-        //
     }
 
     /**
@@ -97,7 +63,7 @@ class EmployeeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id)
+    public function destroy(int $id): \Illuminate\Http\JsonResponse
     {
         $this->service->deleteEmployee($id);
 
