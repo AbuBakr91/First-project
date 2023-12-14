@@ -7,11 +7,11 @@ namespace App\Services;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
-interface EmployeeInterface
+interface EmployeeServiceInterface
 {
-    public function getDepartmentId(string $id): int;
+    public function getDepartmentId(int $id): int;
 
-    public function getPositionId(string $id): int;
+    public function getPositionId(int $id): int;
 
     public function getEmployee(): Collection;
 
