@@ -49,28 +49,40 @@ class DepartmentController extends Controller
 
     /**
      * Display the specified resource.
+     * @throws Exception
      */
 
     public function update(Request $request, int $id): \Illuminate\Http\JsonResponse
     {
-        $this->service->editDepartment($request, $id);
+        try {
+            $this->service->editDepartment($request, $id);
+
+        } catch (Exception $e) {
+            throw new Exception('Ошибка при добавлении нового отдела' . $e->getMessage());
+        }
 
         return DepartmentResponseHelper::createResponse([
             'status' => 200,
-            'message' => 'Отдел обновлен!'
+            'message' => 'Название отдела обновлено!'
         ]);
     }
 
     /**
      * Remove the specified resource from storage.
+     * @throws Exception
      */
     public function destroy(int $id): \Illuminate\Http\JsonResponse
     {
-        $this->service->deleteDepartment($id);
+        try {
+            $this->service->deleteDepartment($id);
+
+        } catch (Exception $e) {
+            throw new Exception('Ошибка при удалении данных об отделе' . $e->getMessage());
+        }
 
         return DepartmentResponseHelper::createResponse([
             'status' => 200,
-            'message' => 'Отдел удален!'
+            'message' => 'Данные об отделе удалены!'
         ]);
     }
 }
