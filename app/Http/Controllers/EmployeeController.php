@@ -4,16 +4,18 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Services\EmployeeInterface;
+use App\Services\EmployeeHelper;
 use App\Services\EmployeeResponseHelper;
 use App\Services\EmployeeService;
+use App\Services\EmployeeServiceInterface;
+use Exception;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
     protected EmployeeService $service;
 
-    public function __construct(EmployeeInterface $service)
+    public function __construct(EmployeeServiceInterface $service)
     {
         $this->service = $service;
     }
@@ -24,15 +26,6 @@ class EmployeeController extends Controller
     public function index(): \Illuminate\Database\Eloquent\Collection
     {
         return $this->service->getEmployee();
-    }
-
-    /**
-<<<<<<< HEAD
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-
     }
 
     /**

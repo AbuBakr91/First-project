@@ -7,11 +7,11 @@ namespace App\Services;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
-interface DepartmentInterface
+interface DepartmentServiceInterface
 {
     public function getDepartment(): Collection;
 
-    public function addNewDepartment(array $params): void;
+    public function addNewDepartment(string $name): void;
 
     public function editDepartment(Request $request, int $id): void;
 

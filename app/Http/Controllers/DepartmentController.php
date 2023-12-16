@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Services\DepartmentInterface;
+use App\Services\DepartmentServiceInterface;
 use App\Services\DepartmentResponseHelper;
 use App\Services\DepartmentService;
+use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class DepartmentController extends Controller
 {
     protected DepartmentService $service;
 
-    public function __construct(DepartmentInterface $service)
+    public function __construct(DepartmentServiceInterface $service)
     {
         $this->service = $service;
     }
@@ -28,70 +29,48 @@ class DepartmentController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     * @throws Exception
      */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request): \Illuminate\Http\JsonResponse
     {
-        $params = [
-            'name' => $request->input('name'),
-            'description' => $request->input('description'),
-            'id_leader' => $request->input('id_leader'),
-        ];
+        try {
+            $this->service->addNewDepartment($request->input('name'));
 
-        $this->service->addNewDepartment($params);
+        } catch (Exception $e) {
+            throw new Exception('Ошибка при добавлении нового отдела' . $e->getMessage());
+        }
 
         return DepartmentResponseHelper::createResponse([
             'status' => 200,
-            'message' => 'Department created!'
+            'message' => 'Отдел добавлен!'
         ]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, int $id): \Illuminate\Http\JsonResponse
     {
         $this->service->editDepartment($request, $id);
 
         return DepartmentResponseHelper::createResponse([
             'status' => 200,
-            'message' => 'Department updated!'
+            'message' => 'Отдел обновлен!'
         ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id)
+    public function destroy(int $id): \Illuminate\Http\JsonResponse
     {
         $this->service->deleteDepartment($id);
 
         return DepartmentResponseHelper::createResponse([
             'status' => 200,
-            'message' => 'Department deleted!'
+            'message' => 'Отдел удален!'
         ]);
     }
 }

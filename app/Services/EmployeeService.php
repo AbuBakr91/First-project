@@ -1,17 +1,7 @@
 <?php
 
-<<<<<<< HEAD
 declare(strict_types=1);
 
-namespace App\Services;
-
-use App\Models\Employee;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\Request;
-
-class EmployeeService implements EmployeeInterface
-{
-=======
 namespace App\Services;
 
 use App\Models\Department;
@@ -22,8 +12,6 @@ use Illuminate\Http\Request;
 
 class EmployeeService implements EmployeeServiceInterface
 {
-
->>>>>>> DEV-4.1
     public function getEmployee(): Collection
     {
         return Employee::all();
