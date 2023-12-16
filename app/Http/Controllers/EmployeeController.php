@@ -4,16 +4,18 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Services\EmployeeInterface;
+use App\Services\EmployeeHelper;
+use App\Services\EmployeeServiceInterface;
 use App\Services\EmployeeResponseHelper;
 use App\Services\EmployeeService;
+use Exception;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
     protected EmployeeService $service;
 
-    public function __construct(EmployeeInterface $service)
+    public function __construct(EmployeeServiceInterface $service)
     {
         $this->service = $service;
     }
@@ -43,7 +45,7 @@ class EmployeeController extends Controller
 
         return EmployeeResponseHelper::createResponse([
             'status' => 200,
-            'message' => 'Сотрудник добавлен!'
+            'message' => 'Добавлен новый сотрудник!'
         ]);
     }
 
@@ -52,11 +54,16 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, int $id)
     {
-        $this->service->editEmployee($request, $id);
+        try {
+            $this->service->editEmployee($request, $id);
+
+        } catch (Exception $e) {
+            throw new Exception('Ошибка при обновлении данных о сотруднике' . $e->getMessage());
+        }
 
         return EmployeeResponseHelper::createResponse([
             'status' => 200,
-            'message' => 'Employee updated!'
+            'message' => 'Данные о сотруднике обновлены!'
         ]);
     }
 
@@ -65,11 +72,16 @@ class EmployeeController extends Controller
      */
     public function destroy(int $id): \Illuminate\Http\JsonResponse
     {
-        $this->service->deleteEmployee($id);
+        try {
+            $this->service->deleteEmployee($id);
+
+        } catch (Exception $e) {
+            throw new Exception('Ошибка при удалении данных о сотруднике' . $e->getMessage());
+        }
 
         return EmployeeResponseHelper::createResponse([
             'status' => 200,
-            'message' => 'Employee deleted!'
+            'message' => 'Данные о сотруднике удалены!'
         ]);
     }
 }
