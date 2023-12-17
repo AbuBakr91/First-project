@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Services\DepartmentService;
 use App\Services\DepartmentServiceInterface;
+use App\Services\EmployeeSalaryService;
+use App\Services\EmployeeSalaryServiceInterface;
 use App\Services\EmployeeService;
 use App\Services\EmployeeServiceInterface;
 use App\Services\PositionService;
@@ -20,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(EmployeeServiceInterface::class, EmployeeService::class);
         $this->app->bind(DepartmentServiceInterface::class, DepartmentService::class);
         $this->app->bind(PositionServiceInterface::class, PositionService::class);
+        $this->app->bind(EmployeeSalaryServiceInterface::class, EmployeeSalaryService::class);
     }
 
     /**

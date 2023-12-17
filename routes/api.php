@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\EmployeeSalaryController;
 use App\Http\Controllers\PositionController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,4 +42,11 @@ use Illuminate\Support\Facades\Route;
         Route::post('position', 'store');
         Route::patch('position/{id}', 'update');
         Route::delete('position/{id}', 'destroy');
+    });
+
+    Route::controller(EmployeeSalaryController::class)->group(function () {
+        Route::get('employee_salary', 'index');
+        Route::post('employee_salary', 'store');
+        Route::patch('employee_salary/{id}', 'update');
+        Route::delete('employee_salary/{id}', 'destroy');
     });
