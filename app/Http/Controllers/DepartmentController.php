@@ -38,12 +38,12 @@ class DepartmentController extends Controller
             $this->service->addNewDepartment($request->input('name'));
 
         } catch (Exception $e) {
-            throw new Exception('Ошибка при добавлении нового отдела' . $e->getMessage());
+            throw new Exception('Ошибка при добавлении данных о новом отделе' . $e->getMessage());
         }
 
         return DepartmentResponseHelper::createResponse([
             'status' => 200,
-            'message' => 'Отдел добавлен!'
+            'message' => 'Данные о новом отделе добавлены!'
         ]);
     }
 
@@ -58,7 +58,7 @@ class DepartmentController extends Controller
             $this->service->editDepartment($request, $id);
 
         } catch (Exception $e) {
-            throw new Exception('Ошибка при добавлении нового отдела' . $e->getMessage());
+            throw new Exception('Ошибка при обновлении данных об отделе' . $e->getMessage());
         }
 
         return DepartmentResponseHelper::createResponse([

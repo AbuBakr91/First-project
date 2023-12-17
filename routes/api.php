@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\PositionController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -22,16 +22,23 @@ use Illuminate\Support\Facades\Route;
 //});
 
 
-Route::controller(EmployeeController::class)->group(function () {
-    Route::get('employee', 'index');
-    Route::post('employee', 'store');
-    Route::patch('employee/{id}', 'update');
-    Route::delete('employee/{id}', 'destroy');
-});
+    Route::controller(EmployeeController::class)->group(function () {
+        Route::get('employee', 'index');
+        Route::post('employee', 'store');
+        Route::patch('employee/{id}', 'update');
+        Route::delete('employee/{id}', 'destroy');
+    });
 
-Route::controller(DepartmentController::class)->group(function() {
-    Route::get('department', 'index');
-    Route::post('department', 'store');
-    Route::patch('department/{id}', 'update');
-    Route::delete('department/{id}', 'destroy');
-});
+    Route::controller(DepartmentController::class)->group(function() {
+        Route::get('department', 'index');
+        Route::post('department', 'store');
+        Route::patch('department/{id}', 'update');
+        Route::delete('department/{id}', 'destroy');
+    });
+
+    Route::controller(PositionController::class)->group(function() {
+        Route::get('position', 'index');
+        Route::post('position', 'store');
+        Route::patch('position/{id}', 'update');
+        Route::delete('position/{id}', 'destroy');
+    });

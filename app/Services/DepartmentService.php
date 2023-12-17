@@ -33,7 +33,8 @@ class DepartmentService implements DepartmentServiceInterface
             $department->name = $request->name;
         }
 
-        $department->update();    }
+        $department->update();
+    }
 
     public function deleteDepartment(int $id): void
     {
