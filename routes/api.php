@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\DepartmentHeadController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeSalaryController;
 use App\Http\Controllers\PositionController;
@@ -49,4 +50,11 @@ use Illuminate\Support\Facades\Route;
         Route::post('employee_salary', 'store');
         Route::patch('employee_salary/{id}', 'update');
         Route::delete('employee_salary/{id}', 'destroy');
+    });
+
+    Route::controller(DepartmentHeadController::class)->group(function() {
+        Route::get('department_head', 'index');
+        Route::post('department_head', 'store');
+        Route::patch('department_head/{id}', 'update');
+        Route::delete('department_head/{id}', 'destroy');
     });
